@@ -1,6 +1,8 @@
 package com.example.network;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView2;
     private EditText editText;
     private Button button;
+    private String usertoken;
     //String url = "http://218.78.85.248:8888/v1/sign/sign_in";
 
 
@@ -56,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
         button = (Button)findViewById(R.id.Button);
         //button.setOnClickListener((View.OnClickListener) this);
         button.setOnClickListener(new mClick());
+        SharedPreferences sharedPreferences= getSharedPreferences("data", Context.MODE_PRIVATE);
+        String usertoken=sharedPreferences.getString("token","");
+
+
 
 
     }
@@ -68,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             if (signcode.length() == 0) textView2.setText("签到码不能为空！");
             else {
 
-                post(signaddress, signcode);
+                post(signaddress, signcode, usertoken);
 
             }
 
@@ -138,8 +145,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
      }*/
-    public void post(String address, String sign_code){
-        okhttp.post(address, sign_code, new Callback() {
+    public <token> void post(String address, String sign_code, String token){
+        okhttp.post(address, sign_code, token, new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {

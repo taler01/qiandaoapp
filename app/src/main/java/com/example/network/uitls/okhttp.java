@@ -18,10 +18,11 @@ public class okhttp {
 
 
     }*/
-    public static void post(String address, String sign_code, okhttp3.Callback callback){
+    public static void post(String address, String sign_code, String token, okhttp3.Callback callback){
         OkHttpClient client = new OkHttpClient();
         FormBody body = new FormBody.Builder()
                 .add("signcode",sign_code)
+                .add("usertoken", token)
                 .build();
         Request request = new Request.Builder()
                 .url("http://218.78.85.248:8888/v1/sign/sign_in")
