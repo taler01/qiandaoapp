@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         button = (Button)findViewById(R.id.Button);
         //button.setOnClickListener((View.OnClickListener) this);
         button.setOnClickListener(new mClick());
-        SharedPreferences sharedPreferences= getSharedPreferences("data", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences= getSharedPreferences("config", Context.MODE_PRIVATE);
         String usertoken=sharedPreferences.getString("token","");
 
 
@@ -77,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
 
                 post(signaddress, signcode, usertoken);
 
+            }
+            if (usertoken.isEmpty()){
+              textView2.setText("请先登录");
             }
 
 
