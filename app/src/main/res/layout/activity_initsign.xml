@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <LinearLayout android:orientation="vertical" android:layout_height="match_parent" android:layout_width="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView android:layout_height="50dp" android:layout_width="fill_parent" android:textSize="35sp" android:text="请设置以下信息：" android:layout_y="100dp" android:layout_x="50px" android:id="@+id/txt1"/>
+
+    <TextView android:layout_height="wrap_content" android:layout_width="fill_parent" android:textSize="25dp" android:text="签到名称:" android:layout_y="100dp" android:layout_x="400dp" android:id="@+id/sign_name" android:inputType="text"/>
+
+    <EditText android:layout_height="wrap_content" android:layout_width="fill_parent" android:textSize="30sp" android:layout_y="52px" android:layout_x="50px" android:id="@+id/edit1" android:inputType="text"/>
+
+    <TextView android:layout_height="wrap_content" android:layout_width="fill_parent" android:textSize="25dp" android:text="签到说明信息:" android:layout_y="100dp" android:layout_x="400dp" android:id="@+id/sign_message" android:inputType="text"/>
+
+    <EditText android:layout_height="wrap_content" android:layout_width="fill_parent" android:textSize="30sp" android:layout_y="52px" android:layout_x="50px" android:id="@+id/edit2" android:inputType="text"/>
+
+    <TextView android:layout_height="wrap_content" android:layout_width="fill_parent" android:textSize="25dp" android:text="签到时间限制:" android:layout_y="100dp" android:layout_x="400dp" android:id="@+id/time_limit" android:inputType="text"/>
+
+    <EditText android:layout_height="wrap_content" android:layout_width="fill_parent" android:textSize="30sp" android:layout_y="52px" android:layout_x="50px" android:id="@+id/edit3" android:inputType="text"/>
+
+    <Button android:layout_height="wrap_content" android:layout_width="150dp" android:textSize="25dp" android:text="发起签到" android:id="@+id/button1" android:layout_gravity="center" android:onClick="initSign"/>
+
+    <TextView android:layout_height="fill_parent" android:layout_width="fill_parent" android:textSize="24sp" android:layout_y="106px" android:layout_x="33px" android:id="@+id/txt2" android:layout_gravity="center"/>
+
+</LinearLayout>
