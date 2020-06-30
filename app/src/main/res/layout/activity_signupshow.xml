@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SecondActivity">
+
+
+    <TextView
+
+        android:layout_width="300dp"
+        android:layout_height="90dp"
+        android:text="签到成功！"
+        android:textColor="#00FF7F"
+        android:layout_marginLeft="90dp"
+        android:padding="20dp"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/myTestView5"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="65dp"
+        android:layout_marginRight="400dp" />
+    <TextView
+        android:id="@+id/myTestView6"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="65dp"
+        android:layout_marginRight="400dp" />
+    <TextView
+        android:id="@+id/myTestView7"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="65dp"
+        android:layout_marginRight="400dp" />
+    <TextView
+        android:id="@+id/myTestView8"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="65dp"
+        android:layout_marginRight="400dp" />
+    <Button
+        android:id="@+id/myButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="80dp"
+        android:text="完成"
+        android:textColor="#000000"
+        android:textSize="25dp" />
+
+
+
+</LinearLayout>
