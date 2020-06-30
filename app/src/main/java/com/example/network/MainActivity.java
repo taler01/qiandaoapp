@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -34,9 +35,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView2;
     private EditText editText;
     private Button button;
-    private String usertoken;
-    private String signaddress;
-    private String signcode;
+    //private String usertoken ;
+    //private String signaddress;
+    //private String signcode;
     //String url = "http://218.78.85.248:8888/v1/sign/sign_in";
 
 
@@ -78,16 +79,21 @@ public class MainActivity extends AppCompatActivity {
             String signcode;
             String signaddress = "http://218.78.85.248:8888/v1/sign/sign_in";
             SharedPreferences sharedPreferences= getSharedPreferences("config", Context.MODE_PRIVATE);
-            String usertoken = sharedPreferences.getString("token","");
+            String token = sharedPreferences.getString("token", "");
+            //String utoken = "73a02459a7104bf5b1299b73c6096ef2";
             signcode = editText.getText().toString();
-            /*if (usertoken.length() == 0){
+            /*Bundle bundle = new Bundle();
+            bundle.putString("text", signcode);
+            Intent intent = new Intent();
+            intent.setClass(MainActivity.this, okhttp.class);
+            intent.putExtras(bundle);*/
+            if (token.length() == 0){
                 Intent intent3=new Intent();
                 //intent3.setClass(MainActivity.this, MainActivity.class);
                 //startActivityForResult(intent3, 0);
-            }*/
+            }
 
             /**
-             * 合并的时候把if前面的/*和对应大括号后面的星号/去掉；
              * 合并的时候要把上两行的//去除掉；
              * 在合并的时候，在if（usertoken.length == 0）的条件成立的情况下由本页面跳转到登陆界面；
              *即把代码intent3.setClass(MainActivity.this, MainActivity.class);的第二个MainActivity改为登陆界面；
@@ -103,9 +109,9 @@ public class MainActivity extends AppCompatActivity {
 
              else {
 
-                post(signaddress, signcode, usertoken);
+                post( signcode, token);
 
-            }
+             }
 
 
         }
@@ -173,12 +179,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
      }*/
-    public <token> void post(String address, String sign_code, String token){
-        okhttp.post(address, sign_code, token, new Callback() {
+    public  void post(final String sign_code, final String token){
+        okhttp.post( sign_code, token, new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
+                //Log.d("MainActivity", "这是token:"+ token);
+                System.out.println(e.getMessage());
+                //Log.d("MainActivity","这是签到码：" + sign_code );
                 textView2.setText("签到失败，请重试");
+                Intent intent4=new Intent();
+                intent4.setClass(MainActivity.this, MainActivity.class);
+                startActivityForResult(intent4, 0);
                 //Toast.makeText(MainActivity.this, "签到失败", Toast.LENGTH_SHORT).show();
                 //return;
 
@@ -187,7 +199,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
                 final String responseData = response.body().string();
-
+                Log.d("MainActivity", "哈哈哈哈,终于出来了1" + responseData);
+                //Log.d("MainActivity",sign_code);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -197,14 +210,18 @@ public class MainActivity extends AppCompatActivity {
                             //在文本筐里显示老师未发布签到信息。
                         }
                         else{
-                            parseJSONWithJSONObject(responseData);
+                            Log.d("MainActivity", "哈哈哈哈,终于出来了2" + responseData);
+                            try {
+                                parseJSONWithJSONObject(responseData);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            Log.d("MainActivity","这是签到码sign_code：" + sign_code);
+                            Log.d("MainActivity","这是token：" + token);
 
-                            Bundle bundle=new Bundle();//传数据到第二个页面。
-                            bundle.putString("text", responseData);
-                            Intent intent = new Intent();
-                            intent.setClass(MainActivity.this, SecondActivity.class);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
+                            /*Bundle bundle=new Bundle();//传数据到第二个页面。
+                            bundle.putString("text", responseData);*/
+
                             //在页面上显示签到信息。
 
                         }
@@ -213,6 +230,54 @@ public class MainActivity extends AppCompatActivity {
                 });
 
             }
+                    private void parseJSONWithJSONObject(String jsonData) throws JSONException {
+                        //try {
+
+                        JSONObject jsonObject = new JSONObject(jsonData);
+                        //JSONArray jsonArray = jsonObject1.getJSONArray("payload");
+                        JSONObject jsondata = jsonObject.getJSONObject("payload");
+
+                        //for (int i = 0; i < jsonArray.length(); i++){
+                        //JSONObject jsonObject = (JSONObject)jsonArray.get(i);
+                        String sign_user = jsondata.getString("sign_user");
+                        String sign_message = jsondata.getString("sign_message");
+                        //JSONArray jarray1 = jsonObject.getJSONArray("time_limit");
+                        int time_limit = jsondata.getInt("time_limit");
+                        String state   = jsondata.optString("state");
+                        Log.d("MainActivity", "sign_user:" + sign_user);
+                        Log.d("MainActivity", "sign_message:" + sign_message);
+                        Log.d("MainActivity", "time_limit:" + time_limit);
+                        Log.d("MainActivity", "state:" + state);
+                        Bundle bundle = new Bundle();
+                        //Bundle bundle2=new Bundle();//传数据到第二个页面。
+                        //Bundle bundle3=new Bundle();//传数据到第二个页面。
+                        //Bundle bundle4=new Bundle();
+                        bundle.putString("text2", sign_message);
+                        bundle.putString("text1", sign_user);
+                        bundle.putInt("text3", time_limit);
+                        bundle.putString("text4", state);
+                        Intent intent = new Intent();
+                        intent.setClass(MainActivity.this, SecondActivity.class);
+                        intent.putExtras(bundle);
+                        //intent.putExtras(bundle2);
+                        //intent.putExtras(bundle3);
+                        //intent.putExtras(bundle4);
+                        startActivity(intent);
+
+
+
+
+
+
+                    }
+
+                /*}catch (Exception e){
+                    e.printStackTrace();
+
+                }*/
+
+
+                //}*
 
             /*private void parseJSONWithJSONObject(String jsonData) {
                 try {
@@ -228,42 +293,12 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }*/
-            private void parseJSONWithJSONObject(String jsonData) {
-               try {
-                   JSONObject jsonObject1 = new JSONObject(jsonData);
-                   JSONArray jsonArray = jsonObject1.getJSONArray("payload");
-
-                   for (int i = 0; i < jsonArray.length(); i++){
-                       JSONObject jsonObject = (JSONObject)jsonArray.get(i);
-                       String sign_user = jsonObject.getString("sign_user");
-                       String sign_message = jsonObject.getString("sign_message");
-                       //JSONArray jarray1 = jsonObject.getJSONArray("time_limit");
-                       String time_limit = jsonObject.getString("time_limit");
-                       Log.d("MainActivity", "sign_user:" + sign_user);
-                       Log.d("MainActivity", "sign_message:" + sign_message);
-                       Log.d("MainActivity", "time_limit:" + time_limit);
-                       /*Bundle bundle1 = new Bundle();
-                       Bundle bundle2=new Bundle();//传数据到第二个页面。
-                       Bundle bundle3=new Bundle();//传数据到第二个页面。
-                       bundle2.putString("text2", sign_message);
-                       bundle1.putString("text1", sign_user);
-                       bundle3.putString("text3", time_limit);*/
 
 
-
-
-
-                   }
-
-               }catch (Exception e){
-                   e.printStackTrace();
-
-               }
-
-
-            }
 
         });
 
+
     }
+
 }

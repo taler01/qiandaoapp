@@ -10,10 +10,10 @@
     <TextView
         android:id="@+id/myTestView1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="请输入签到码！"
-        android:textSize="30dp"
-        android:layout_marginLeft="90dp"
+        android:layout_height="60dp"
+        android:text="请输入签到码"
+        android:textSize="40dp"
+        android:layout_marginLeft="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -31,6 +31,7 @@
         android:layout_height="wrap_content"
         android:inputType="text"
         android:layout_marginLeft="98dp"
+        android:layout_marginTop="50dp"
         android:textSize="20dp"  >
     </EditText>
     <Button
